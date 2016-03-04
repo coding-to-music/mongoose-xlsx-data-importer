@@ -1,0 +1,37 @@
+{
+  "name": "mongoose-xlsx-data-importer",
+  "version": "1.0.0",
+  "description": "import data into mongodb via a xlsx file",
+  "main": "index.js",
+  "dependencies": {
+    "async": "^1.5.2",
+    "chalk": "^1.1.1",
+    "commander": "^2.9.0",
+    "lodash": "^4.6.1",
+    "moment": "^2.11.2",
+    "mongoose": "^4.4.6",
+    "multer": "^1.1.0",
+    "node-xlsx": "^0.6.0",
+    "shelljs": "^0.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://greenpioneer@github.com/GreenPioneer/mongoose-xlsx-data-importer.git"
+  },
+  "keywords": [
+    "mongoosejs",
+    "importer",
+    "mongodb",
+    "importer"
+  ],
+  "author": "Green Pioneer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GreenPioneer/mongoose-xlsx-data-importer/issues"
+  },
+  "homepage": "https://github.com/GreenPioneer/mongoose-xlsx-data-importer#readme"
+}
