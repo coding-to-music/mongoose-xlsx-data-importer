@@ -1,3 +1,8 @@
+#!/usr/bin/env node
+
+'use strict'
+var inquirer = require('inquirer')
+var chalk = require('chalk')
 var xlsx = require('node-xlsx')
 var mongoose = require('mongoose')
 var _ = require('lodash')
@@ -11,6 +16,40 @@ var beautify = require('js-beautify').js_beautify
   //   page: mongoose.model('Page'),
   //   article: mongoose.model('Article')
   // }
+  
+  // console.log(beautify(JSON.stringify(imported)))
+  
+
+
+  // _.forEach(imported, function (imp, impkey) {
+  //   models[impkey].create(imported[impkey]).then(function (success) {
+  //     console.log(success, 'success')
+  //   }, function (err) {
+  //     console.log(err, 'catch on import create')
+  //   })
+  // })
+
+
+
+
+var introQuestions = [
+  {
+    type: 'list',
+    name: 'intro',
+    message: 'What do you want to do?',
+    choices: [
+      new inquirer.Separator(chalk.green('Data + File:')),
+      'Parse Data to txt',
+      new inquirer.Separator(chalk.green('Data + DB:')),
+      'Parse Data to Mongoose',
+      new inquirer.Separator(chalk.green('Util:')),
+      'Check Mongo Connection',
+      'Check Data',
+      'Exit'
+    ]
+  }
+]
+function parseData(){
   var obj = xlsx.parse(__dirname + '/ex/data.xlsx')
   var imported = {}
   var arrayFlag = []
@@ -68,14 +107,79 @@ var beautify = require('js-beautify').js_beautify
       }
     })
   })
-  console.log(beautify(JSON.stringify(imported)))
-  fs.writeFile('./ex/data.txt', beautify(JSON.stringify(imported), { indent_size: 2 }), function (err) {
-    if (err) return console.log(err);
-  });
-  // _.forEach(imported, function (imp, impkey) {
-  //   models[impkey].create(imported[impkey]).then(function (success) {
-  //     console.log(success, 'success')
-  //   }, function (err) {
-  //     console.log(err, 'catch on import create')
-  //   })
-  // })
+  return imported
+}
+
+var dataGoodQuestion = [
+  {
+    type: 'confirm',
+    name: 'confirmData',
+    message: 'Does the data look right (just hit enter for YES)?',
+    default: true
+  }
+]
+function dataGoodQuestionFunc () {
+  
+  return answer
+}
+function ask () {
+  inquirer.prompt(introQuestions, function (answers) {
+    switch (answers.intro) {
+      case 'Parse Data to txt':
+        var goodData = true
+        var data = parseData()
+        _.forEach(data,function(pd){
+          _.forEach(pd,function(n,k){
+            console.log(chalk.blue(beautify(JSON.stringify(n))))
+            //var answer = true
+            // inquirer.prompt(dataGoodQuestion, function (answers) {
+            //   console.log(answers,'answers')
+            //   answer = answers.confirmData
+            // })
+          })
+        })
+        fs.writeFile('./ex/data.txt', beautify(JSON.stringify(data), { indent_size: 2 }), function (err) {
+          if (err) return console.log(err);
+        });
+        ask()
+        break
+      case 'Parse Data to Mongoose':
+        console.log(chalk.red('Not Implemented Yet'))
+        ask()
+        break
+      case 'Check Mongo Connection':
+        console.log(chalk.red('Not Implemented Yet'))
+        ask()
+        break
+      case 'Check Data':
+        console.log(chalk.red('Not Implemented Yet'))
+        ask()
+        break
+      case 'Exit':
+        console.log(chalk.red('Exiting Now'))
+        process.exit()
+        break
+    }
+  })
+}
+ask()
+
+
+
+// {
+//     type: 'input',
+//     name: 'email',
+//     message: 'Email of the User',
+//     default: function () { return 'testing@test.com' }
+//   }
+
+
+
+
+
+
+
+
+
+
+
