@@ -7,6 +7,8 @@ var xlsx = require('node-xlsx')
 var mongoose = require('mongoose')
 var _ = require('lodash')
 var fs = require('fs')
+var path = require('path')
+var async = require('async')
 var beautify = require('js-beautify').js_beautify
   // var models = {
   //   user: mongoose.model('User'),
@@ -109,7 +111,17 @@ function parseData(){
   })
   return imported
 }
-
+var validateChoiceQuestions = [
+  {
+    type: 'list',
+    name: 'validChoice',
+    message: 'How Do you want to validate your data?',
+    choices: [
+      'By Each Object',
+      'By One Sample '
+    ]
+  }
+]
 var dataGoodQuestion = [
   {
     type: 'confirm',
@@ -118,42 +130,118 @@ var dataGoodQuestion = [
     default: true
   }
 ]
-function dataGoodQuestionFunc () {
-  
-  return answer
+var pathQuestion = [
+  { 
+    type: "input",
+    name: "path",
+    message: "What's the path you to file you want to create",
+    default: function () { return "./ex/data.txt"; }
+  }
+]
+function dataGoodQuestionFunc (cb) {
+  inquirer.prompt(dataGoodQuestion, function (answers) {
+    cb(answers.confirmData)
+  })
+}
+function parseDatabySample(cb){
+  var data = parseData()
+  var task = [function(callback) {
+        callback(null,'none');
+  }]
+  _.forEach(data,function(pd,pdk){
+    _.forEach(pd,function(n,k){
+      if(k==0)task.push(function(arg1,callback) {
+        console.log(chalk.blue(beautify(JSON.stringify(n))))
+        dataGoodQuestionFunc(function(dataAnwser){
+          if(dataAnwser)callback(null,data)
+          else callback(true,null)
+        })
+      })
+    })
+  })
+  async.waterfall(task, function (err, result) {
+    if(err){
+      console.log(chalk.red('Data Not Formatted Correctly ... \n EXITING NOW '))
+      process.exit()
+    }
+    else {
+      cb(data)
+    }
+  })
+}
+function parseDatabyObject(cb){
+  var data = parseData()
+  var task = [function(callback) {
+        callback(null,'none');
+  }]
+  _.forEach(data,function(pd,pdk){
+    _.forEach(pd,function(n,k){
+      task.push(function(arg1,callback) {
+        console.log(chalk.blue(beautify(JSON.stringify(n))))
+        dataGoodQuestionFunc(function(dataAnwser){
+          if(dataAnwser)callback(null,data)
+          else callback(true,null)
+        })
+      })
+    })
+  })
+  console.log(task)
+  async.waterfall(task, function (err, result) {
+    if(err){
+      console.log(chalk.red('Data Not Formatted Correctly ... \n EXITING NOW '))
+      process.exit()
+    }
+    else {
+      cb(data)
+    }
+  })
 }
 function ask () {
+  
   inquirer.prompt(introQuestions, function (answers) {
     switch (answers.intro) {
       case 'Parse Data to txt':
-        var goodData = true
-        var data = parseData()
-        _.forEach(data,function(pd){
-          _.forEach(pd,function(n,k){
-            console.log(chalk.blue(beautify(JSON.stringify(n))))
-            //var answer = true
-            // inquirer.prompt(dataGoodQuestion, function (answers) {
-            //   console.log(answers,'answers')
-            //   answer = answers.confirmData
-            // })
-          })
+        inquirer.prompt(validateChoiceQuestions,function(valid){
+          if(valid.validChoice ==='By Each Object'){
+            parseDatabyObject(function(data){
+              inquirer.prompt(pathQuestion,function(pathAnwser){
+                if (!fs.existsSync(path.parse(pathAnwser.path).dir)) {
+                  fs.mkdirSync(path.parse(pathAnwser.path).dir)
+                }
+                fs.writeFile(pathAnwser.path, beautify(JSON.stringify(data), { indent_size: 2 }), function (err) {
+                  if (err) return console.log(err);
+                  console.log(chalk.green('Created \n Path:'+pathAnwser.path))
+                  process.exit()
+                });
+              })
+            })
+          }else{
+            parseDatabySample(function(data){
+              inquirer.prompt(pathQuestion,function(pathAnwser){
+                if (!fs.existsSync(path.parse(pathAnwser.path).dir)) {
+                  fs.mkdirSync(path.parse(pathAnwser.path).dir)
+                }
+                fs.writeFile(pathAnwser.path, beautify(JSON.stringify(data), { indent_size: 2 }), function (err) {
+                  if (err) return console.log(err);
+                  console.log(chalk.green('Created \n Path:'+pathAnwser.path))
+                  process.exit()
+                });
+              })
+            })
+          }
         })
-        fs.writeFile('./ex/data.txt', beautify(JSON.stringify(data), { indent_size: 2 }), function (err) {
-          if (err) return console.log(err);
-        });
-        ask()
         break
       case 'Parse Data to Mongoose':
         console.log(chalk.red('Not Implemented Yet'))
-        ask()
+        process.exit()
         break
       case 'Check Mongo Connection':
         console.log(chalk.red('Not Implemented Yet'))
-        ask()
+        process.exit()
         break
       case 'Check Data':
         console.log(chalk.red('Not Implemented Yet'))
-        ask()
+        process.exit()
         break
       case 'Exit':
         console.log(chalk.red('Exiting Now'))
