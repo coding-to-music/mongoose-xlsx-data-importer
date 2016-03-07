@@ -26,6 +26,11 @@ build/Release
 # Dependency directory
 node_modules
 
+# EXAMPLE
+ex
+!ex/data.xlsx
+
+
 # Optional npm cache directory
 .npm
 
