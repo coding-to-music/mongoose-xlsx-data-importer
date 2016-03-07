@@ -1,7 +1,7 @@
 {
   "name": "mongoose-xlsx-data-importer",
   "version": "1.0.0",
-  "description": "import data into mongodb via a xlsx file",
+  "description": "CLI for importing xlsx documents into mongodb or into straight json obj.",
   "main": "index.js",
   "dependencies": {
     "async": "^1.5.2",
