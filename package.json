@@ -20,6 +20,9 @@
   "scripts": {
     "test": "npm test"
   },
+  "bin": {
+    "MXDI": "./bin/cli.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://greenpioneer@github.com/GreenPioneer/mongoose-xlsx-data-importer.git"
@@ -28,7 +31,10 @@
     "mongoosejs",
     "importer",
     "mongodb",
-    "importer"
+    "xlsx parser",
+    "mongoose",
+    "parser",
+    "xlsx"
   ],
   "author": "Green Pioneer",
   "license": "MIT",
