@@ -64,7 +64,7 @@ var MongoQuestion = [{
     name: "uri",
     message: "What's the URI you to file you want to create",
     default: function() {
-        return "mongodb://test:test@ds037814.mongolab.com:37814/jhumphrey";
+        return "mongodb://localhost/test";
     }
 }]
 var ParsePathQuestion = [{
@@ -573,7 +573,7 @@ function ask() {
                 break
             case 'Check Mongo Connection':
                 inquirer.prompt(MongoQuestion, function(mongo) {
-                    mongoose.connect('mongodb://test:test@ds037814.mongolab.com:37814/jhumphrey')
+                    mongoose.connect('mongodb://localhost/test')
                     mongoose.connection.onOpen(function() {
                         console.log(mongoose.connection.readyState ? chalk.green('Connected') : chalk.red('Not Connected'));
                         ask()
