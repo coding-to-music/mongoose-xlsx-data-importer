@@ -1,6 +1,6 @@
 Mongoose-Xlsx-Data-Importer
 ---------------------------------
-CLI for importing xlsx documents into mongodb or into straight json obj. Also you can run xlsx reports based on your db collections. You can also create data from scratch and create custom schemas.
+CLI for importing xlsx documents into mongodb or into straight json obj. Also you can run xlsx reports based on your db collections. You can create data from scratch and create custom schemas.
 
 Try it out and let us know your thoughts
 
