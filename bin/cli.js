@@ -372,7 +372,8 @@ function ask () {
                         tempModel[n.field].type = n.type
                         tempModel[n.field].default = n.default
                       })
-                      models[schema.name] = mongoose.model(schema.name, tempModel)
+                      var newSchema = new mongoose.Schema(tempModel)
+                      models[schema.name] = mongoose.model('stats', newSchema)
                       askAgain(function (askAgainValue) {
                         if (askAgainValue) {
                           schemaCreateCustom()
@@ -572,7 +573,7 @@ function ask () {
         break
       case 'Check Mongo Connection':
         inquirer.prompt(MongoQuestion, function (mongo) {
-          mongoose.connect('mongodb://localhost/test')
+          mongoose.connect(mongo.uri)
           mongoose.connection.onOpen(function () {
             console.log(mongoose.connection.readyState ? chalk.green('Connected') : chalk.red('Not Connected'))
             ask()
