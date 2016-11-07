@@ -3,7 +3,6 @@
 [![dependencies](https://david-dm.org/greenpioneersolutions/mongoose-xlsx-data-importer.svg)](https://david-dm.org/greenpioneersolutions/mongoose-xlsx-data-importer)
 [![npm-issues](https://img.shields.io/github/issues/greenpioneersolutions/mongoose-xlsx-data-importer.svg)](https://github.com/greenpioneersolutions/mongoose-xlsx-data-importer/issues)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
-[![js-standard-style](https://nodei.co/npm/mongoose-xlsx-data-importer.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/mongoose-xlsx-data-importer.png?downloads=true&downloadRank=true&stars=true)
 
 [npm-image]: https://img.shields.io/npm/v/mongoose-xlsx-data-importer.svg?style=flat
 [npm-url]: https://npmjs.org/package/mongoose-xlsx-data-importer
@@ -49,7 +48,7 @@ Capitalization - you must keep it consist
 Schemas - you must create the schema with all fields if you wish to save all of the data
 MLab - Yes you can connect to other servers just make sure your uri is absolutely correct & test with the check connection feature first
 Custom Schema - We recommend just leaving the default value null but cause he have noticed odd scenarios with doing anything else
-
+Xlsx tab names - properly name those as the schema names
 
 ```
 

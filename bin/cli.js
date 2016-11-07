@@ -206,13 +206,13 @@ function parseData (path) {
   return imported
 }
 function dataGoodQuestionFunc (cb) {
-  inquirer.prompt(dataGoodQuestion, function (answers) {
+  inquirer.prompt(dataGoodQuestion).then(function (answers) {
     cb(answers.confirmData)
   })
 }
 
 function parseDatabySample (cb) {
-  inquirer.prompt(ParsePathQuestion, function (parsing) {
+  inquirer.prompt(ParsePathQuestion).then(function (parsing) {
     if (!fs.existsSync(path.resolve(parsing.path))) {
       console.log(chalk.red('Unable to find \n Path:' + path.resolve(parsing.path)))
       process.exit()
@@ -246,7 +246,7 @@ function parseDatabySample (cb) {
 }
 
 function parseDatabyObject (cb) {
-  inquirer.prompt(ParsePathQuestion, function (parsing) {
+  inquirer.prompt(ParsePathQuestion).then(function (parsing) {
     if (!fs.existsSync(path.resolve(parsing.path))) {
       console.log(chalk.red('Unable to find \n Path:' + path.resolve(parsing.path)))
       process.exit()
@@ -280,7 +280,7 @@ function parseDatabyObject (cb) {
 var schemaOutput = []
 
 function buildSchema (cb) {
-  inquirer.prompt(schemaQuestions, function (fields) {
+  inquirer.prompt(schemaQuestions).then(function (fields) {
     schemaOutput.push(fields)
     if (fields.askAgain) {
       buildSchema(cb)
@@ -291,13 +291,13 @@ function buildSchema (cb) {
 }
 
 function askAgain (cb) {
-  inquirer.prompt(askAgainQuestion, function (ask) {
+  inquirer.prompt(askAgainQuestion).then(function (ask) {
     cb(ask.askAgain)
   })
 }
 
 function importBuilder (cb) {
-  inquirer.prompt(importQuestion, function (importObj) {
+  inquirer.prompt(importQuestion).then(function (importObj) {
     var data = JSON.parse(JSON.stringify(importObj.import))
     // Use JSON.parse JSON.parse(stringifiedObject)
     // Use new function, var parsed = new Function('return ' + stringifiedObject)()
@@ -313,13 +313,13 @@ function importBuilder (cb) {
 }
 
 function ask () {
-  inquirer.prompt(introQuestions, function (answers) {
+  inquirer.prompt(introQuestions).then(function (answers) {
     switch (answers.intro) {
       case 'Parse XLSX Data to File':
-        inquirer.prompt(validateChoiceQuestions, function (valid) {
+        inquirer.prompt(validateChoiceQuestions).then(function (valid) {
           if (valid.validChoice === 'By Each Object') {
             parseDatabyObject(function (data) {
-              inquirer.prompt(pathQuestion, function (pathAnwser) {
+              inquirer.prompt(pathQuestion).then(function (pathAnwser) {
                 if (!fs.existsSync(path.parse(pathAnwser.path).dir)) {
                   fs.mkdirSync(path.parse(pathAnwser.path).dir)
                 }
@@ -334,7 +334,7 @@ function ask () {
             })
           } else {
             parseDatabySample(function (data) {
-              inquirer.prompt(pathQuestion, function (pathAnwser) {
+              inquirer.prompt(pathQuestion).then(function (pathAnwser) {
                 if (!fs.existsSync(path.parse(pathAnwser.path).dir)) {
                   fs.mkdirSync(path.parse(pathAnwser.path).dir)
                 }
@@ -351,7 +351,7 @@ function ask () {
         })
         break
       case 'Parse XLSX Data to Mongoose':
-        inquirer.prompt(MongoQuestion, function (mongo) {
+        inquirer.prompt(MongoQuestion).then(function (mongo) {
           mongoose.connect(mongo.uri)
           mongoose.connection.onOpen(function () {
             console.log(mongoose.connection.readyState ? chalk.green('Connected') : chalk.red('Not Connected'))
@@ -360,11 +360,11 @@ function ask () {
               process.exit()
             }
 
-            inquirer.prompt(schemaPreQuestion, function (pretype) {
+            inquirer.prompt(schemaPreQuestion).then(function (pretype) {
               var models = {}
               if (pretype.schemaQuestions === 'Create Custom Create') {
                 function schemaCreateCustom () {
-                  inquirer.prompt(schemaNameQuestion, function (schema) {
+                  inquirer.prompt(schemaNameQuestion).then(function (schema) {
                     var tempModel = {}
                     buildSchema(function (data) {
                       _.forEach(data, function (n, k) {
@@ -378,7 +378,7 @@ function ask () {
                         if (askAgainValue) {
                           schemaCreateCustom()
                         } else {
-                          inquirer.prompt(validateChoiceQuestions, function (valid) {
+                          inquirer.prompt(validateChoiceQuestions).then(function (valid) {
                             if (valid.validChoice === 'By Each Object') {
                               parseDatabyObject(function (data) {
                                 _.forEach(data, function (imp, impkey) {
@@ -423,14 +423,14 @@ function ask () {
                 schemaCreateCustom()
               } else {
                 function schemaImport () {
-                  inquirer.prompt(schemaNameQuestion, function (schema) {
+                  inquirer.prompt(schemaNameQuestion).then(function (schema) {
                     importBuilder(function (obj) {
                       models[schema.name] = mongoose.model(schema.name, obj)
                       askAgain(function (askAgainValue) {
                         if (askAgainValue) {
                           schemaImport()
                         } else {
-                          inquirer.prompt(validateChoiceQuestions, function (valid) {
+                          inquirer.prompt(validateChoiceQuestions).then(function (valid) {
                             if (valid.validChoice === 'By Each Object') {
                               parseDatabyObject(function (data) {
                                 _.forEach(data, function (imp, impkey) {
@@ -479,7 +479,7 @@ function ask () {
         })
         break
       case 'Export Mongoose Collection to XLSX':
-        inquirer.prompt(MongoQuestion, function (mongo) {
+        inquirer.prompt(MongoQuestion).then(function (mongo) {
           mongoose.connect(mongo.uri)
           mongoose.connection.onOpen(function () {
             console.log(mongoose.connection.readyState ? chalk.green('Connected') : chalk.red('Not Connected'))
@@ -488,11 +488,11 @@ function ask () {
               process.exit()
             }
 
-            inquirer.prompt(schemaPreQuestion, function (pretype) {
+            inquirer.prompt(schemaPreQuestion).then(function (pretype) {
               var models = {}
               if (pretype.schemaQuestions === 'Create Custom Create') {
                 function schemaCreateCustom () {
-                  inquirer.prompt(schemaNameQuestion, function (schema) {
+                  inquirer.prompt(schemaNameQuestion).then(function (schema) {
                     var tempModel = {}
                     buildSchema(function (data) {
                       _.forEach(data, function (n, k) {
@@ -516,7 +516,7 @@ function ask () {
                           name: schema.name,
                           data: tab
                         }])
-                        inquirer.prompt(pathXlsxQuestion, function (pathAnwser) {
+                        inquirer.prompt(pathXlsxQuestion).then(function (pathAnwser) {
                           if (!fs.existsSync(path.parse(pathAnwser.path).dir)) {
                             fs.mkdirSync(path.parse(pathAnwser.path).dir)
                           }
@@ -533,7 +533,7 @@ function ask () {
                 schemaCreateCustom()
               } else {
                 function schemaImport () {
-                  inquirer.prompt(schemaNameQuestion, function (schema) {
+                  inquirer.prompt(schemaNameQuestion).then(function (schema) {
                     importBuilder(function (obj) {
                       models[schema.name] = mongoose.model(schema.name, obj)
                       models[schema.name].find().exec().then(function (modelResponse) {
@@ -551,7 +551,7 @@ function ask () {
                           name: schema.name,
                           data: tab
                         }])
-                        inquirer.prompt(pathXlsxQuestion, function (pathAnwser) {
+                        inquirer.prompt(pathXlsxQuestion).then(function (pathAnwser) {
                           if (!fs.existsSync(path.parse(pathAnwser.path).dir)) {
                             fs.mkdirSync(path.parse(pathAnwser.path).dir)
                           }
@@ -572,7 +572,7 @@ function ask () {
         })
         break
       case 'Check Mongo Connection':
-        inquirer.prompt(MongoQuestion, function (mongo) {
+        inquirer.prompt(MongoQuestion).then(function (mongo) {
           mongoose.connect(mongo.uri)
           mongoose.connection.onOpen(function () {
             console.log(mongoose.connection.readyState ? chalk.green('Connected') : chalk.red('Not Connected'))
@@ -581,7 +581,7 @@ function ask () {
         })
         break
       case 'Check Path':
-        inquirer.prompt(ParsePathQuestion, function (parsing) {
+        inquirer.prompt(ParsePathQuestion).then(function (parsing) {
           if (!fs.existsSync(path.resolve(parsing.path))) {
             console.log(chalk.red('Unable to find \n Path:' + path.resolve(parsing.path)))
             ask()
