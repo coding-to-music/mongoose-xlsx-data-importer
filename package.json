@@ -1,20 +1,20 @@
 {
   "name": "mongoose-xlsx-data-importer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CLI for importing xlsx documents into mongodb or into straight json obj.",
   "main": "index.js",
   "dependencies": {
-    "async": "^1.5.2",
+    "async": "^2.1.2",
     "chalk": "^1.1.1",
     "commander": "^2.9.0",
-    "inquirer": "^0.12.0",
+    "inquirer": "^1.2.2",
     "js-beautify": "^1.6.2",
     "lodash": "^4.6.1",
     "moment": "^2.11.2",
     "mongoose": "^4.4.6",
     "multer": "^1.1.0",
-    "node-xlsx": "^0.6.0",
-    "shelljs": "^0.6.0"
+    "node-xlsx": "^0.7.4",
+    "shelljs": "^0.7.5"
   },
   "devDependencies": {},
   "scripts": {
@@ -25,7 +25,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://greenpioneer@github.com/GreenPioneer/mongoose-xlsx-data-importer.git"
+    "url": "git+https://greenpioneer@github.com/greenpioneersolutions/mongoose-xlsx-data-importer.git"
   },
   "keywords": [
     "mongoosejs",
@@ -39,7 +39,7 @@
   "author": "Green Pioneer",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/GreenPioneer/mongoose-xlsx-data-importer/issues"
+    "url": "https://github.com/greenpioneersolutions/mongoose-xlsx-data-importer/issues"
   },
-  "homepage": "https://github.com/GreenPioneer/mongoose-xlsx-data-importer#readme"
+  "homepage": "https://github.com/greenpioneersolutions/mongoose-xlsx-data-importer#readme"
 }

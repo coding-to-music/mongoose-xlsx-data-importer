@@ -1,3 +1,14 @@
+[![npm][npm-image]][npm-url]
+[![downloads][downloads-image]][downloads-url]
+[![dependencies](https://david-dm.org/greenpioneersolutions/mongoose-xlsx-data-importer.svg)](https://david-dm.org/greenpioneersolutions/mongoose-xlsx-data-importer)
+[![npm-issues](https://img.shields.io/github/issues/greenpioneersolutions/mongoose-xlsx-data-importer.svg)](https://github.com/greenpioneersolutions/mongoose-xlsx-data-importer/issues)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+
+[npm-image]: https://img.shields.io/npm/v/mongoose-xlsx-data-importer.svg?style=flat
+[npm-url]: https://npmjs.org/package/mongoose-xlsx-data-importer
+[downloads-image]: https://img.shields.io/npm/dt/mongoose-xlsx-data-importer.svg?style=flat
+[downloads-url]: https://npmjs.org/package/mongoose-xlsx-data-importer
+
 Mongoose-Xlsx-Data-Importer
 ---------------------------------
 CLI for importing xlsx documents into mongodb or into straight json obj. Also you can run xlsx reports based on your db collections. You can create data from scratch and create custom schemas.
@@ -31,12 +42,32 @@ firstname = {firstname:'jason'}
 name.first = {name:{first:'jason'}}
 ```
 
+Gotchas
+```
+Capitalization - you must keep it consist
+Schemas - you must create the schema with all fields if you wish to save all of the data
+MLab - Yes you can connect to other servers just make sure your uri is absolutely correct & test with the check connection feature first
+Custom Schema - We recommend just leaving the default value null but cause he have noticed odd scenarios with doing anything else
+Xlsx tab names - properly name those as the schema names
+
+```
+
+FAQ's
+---------------------------------
+N/A
+
 Plan Going Forward so far
 ---------------------------------
-Express Middleware
-Frontend Gui
-Create and save scheam files
-Refactor
+
+* Express Middleware
+
+* Frontend Gui
+
+* Create and save schema files
+
+* Refactor
+
+* Update with Standard JS
 
 License
 ---------------------------------
@@ -79,7 +110,7 @@ will be happy to accept your Pull Requests as long as those adhere to some basic
 ### Creating an Issue
 
 Before you create a new Issue:
-* Check the [Issues](https://github.com/GreenPioneer/meanstackjs/issues) on Github to ensure one doesn't already exist.
+* Check the [Issues](https://github.com/GreenPioneer/mongoose-xlsx-data-importer/issues) on Github to ensure one doesn't already exist.
 * Place use one of these topics in the beginning of your issue title- Contrib, Hotfix, Error, Help or Feature.
 * Clearly describe the issue, including the steps to reproduce the issue.
 * If it's a new feature, enhancement, or restructure, Explain your reasoning on why you think it should be added, as well as a particular use case.
