@@ -1,3 +1,15 @@
+[![npm][npm-image]][npm-url]
+[![downloads][downloads-image]][downloads-url]
+[![dependencies](https://david-dm.org/greenpioneersolutions/mongoose-xlsx-data-importer.svg)](https://david-dm.org/greenpioneersolutions/mongoose-xlsx-data-importer)
+[![npm-issues](https://img.shields.io/github/issues/greenpioneersolutions/mongoose-xlsx-data-importer.svg)](https://github.com/greenpioneersolutions/mongoose-xlsx-data-importer/issues)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+[![js-standard-style](https://nodei.co/npm/mongoose-xlsx-data-importer.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/mongoose-xlsx-data-importer.png?downloads=true&downloadRank=true&stars=true)
+
+[npm-image]: https://img.shields.io/npm/v/mongoose-xlsx-data-importer.svg?style=flat
+[npm-url]: https://npmjs.org/package/mongoose-xlsx-data-importer
+[downloads-image]: https://img.shields.io/npm/dt/mongoose-xlsx-data-importer.svg?style=flat
+[downloads-url]: https://npmjs.org/package/mongoose-xlsx-data-importer
+
 Mongoose-Xlsx-Data-Importer
 ---------------------------------
 CLI for importing xlsx documents into mongodb or into straight json obj. Also you can run xlsx reports based on your db collections. You can create data from scratch and create custom schemas.
@@ -31,16 +43,31 @@ firstname = {firstname:'jason'}
 name.first = {name:{first:'jason'}}
 ```
 
+Gotchas
+```
+Capitalization - you must keep it consist
+Schemas - you must create the schema with all fields if you wish to save all of the data
+MLab - Yes you can connect to other servers just make sure your uri is absolutely correct & test with the check connection feature first
+Custom Schema - We recommend just leaving the default value null but cause he have noticed odd scenarios with doing anything else
+
+
+```
+
 FAQ's
 ---------------------------------
 N/A
 
 Plan Going Forward so far
 ---------------------------------
+
 * Express Middleware
+
 * Frontend Gui
-* Create and save scheam files
+
+* Create and save schema files
+
 * Refactor
+
 * Update with Standard JS
 
 License
