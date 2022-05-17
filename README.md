@@ -10,6 +10,8 @@ By Green Pioneer Solutions https://github.com/greenpioneersolutions
 
 https://github.com/greenpioneersolutions/mongoose-xlsx-data-importer
 
+https://www.npmjs.com/package/mongoose-xlsx-data-importer
+
 ## Environment Values
 
 ```java
