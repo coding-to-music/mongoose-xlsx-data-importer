@@ -3,6 +3,20 @@
   "version": "1.0.1",
   "description": "CLI for importing xlsx documents into mongodb or into straight json obj.",
   "main": "index.js",
+  "engines": {
+    "node": "14.x"
+  },
+  "cacheDirectories": [
+    "node_modules",
+    ".next/cache"
+  ],
+  "scripts": {
+    "test": "npm test",
+    "deploy": "git add . && git commit -m Build && git push"
+  },
+  "bin": {
+    "MXDI": "./bin/cli.js"
+  },
   "dependencies": {
     "async": "^2.1.2",
     "chalk": "^1.1.1",
@@ -17,12 +31,6 @@
     "shelljs": "^0.7.5"
   },
   "devDependencies": {},
-  "scripts": {
-    "test": "npm test"
-  },
-  "bin": {
-    "MXDI": "./bin/cli.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://greenpioneer@github.com/greenpioneersolutions/mongoose-xlsx-data-importer.git"
